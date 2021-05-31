@@ -1,14 +1,16 @@
 package org.Note
 
-interface Crud {   // Методы для работы с заметками.
-    fun add(note: Note): Note // Создает новую заметку у текущего пользователя.
-    fun createComment() //Добавляет новый комментарий к заметке.
-    fun delete(noteIdDelete: Int) //Удаляет заметку текущего пользователя.
-    fun deleteComment() //Удаляет комментарий к заметке.
-    fun edit(note: Note): Boolean //Редактирует заметку текущего пользователя.
-    fun editComment() //Редактирует указанный комментарий у заметки.
-    fun getNotes(noteIds: List<Int>):List<Note> //Возвращает список заметок, созданных пользователем.
-    fun getById(noteId: Int):Note? //Возвращает заметку по её id.
-    fun getComments() //Возвращает список комментариев к заметке.
+import org.w3c.dom.Entity
+
+interface Crud <E>{   // Методы для работы с заметками.
+    fun add(entity: E): E // Создает новую заметку у текущего пользователя.
+    //fun createComment() //Добавляет новый комментарий к заметке.
+    fun delete(IdDelete: Int):Boolean //Удаляет заметку текущего пользователя.
+   // fun deleteComment() //Удаляет комментарий к заметке.
+    fun edit(entity: E): Boolean //Редактирует заметку текущего пользователя.
+  //  fun editComment() //Редактирует указанный комментарий у заметки.
+    fun getNotes(Ids: List<Int>):List<E> //Возвращает список заметок, созданных пользователем.
+    fun getById(IdSearch: Int):E? //Возвращает заметку по её id.
+  //  fun getComments() //Возвращает список комментариев к заметке.
     fun restoreComment() //Восстанавливает удалённый комментарий.
 }
