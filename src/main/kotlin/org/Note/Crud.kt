@@ -3,7 +3,7 @@ package org.Note
 import org.w3c.dom.Entity
 
 interface Crud <E>{   // Методы для работы с заметками.
-    fun add(entity: E): E // Создает новую заметку у текущего пользователя.
+    fun add(entity: E): Int // Создает новую заметку у текущего пользователя.
     //fun createComment() //Добавляет новый комментарий к заметке.
     fun delete(idDelete: Int):Boolean //Удаляет заметку текущего пользователя.
    // fun deleteComment() //Удаляет комментарий к заметке.

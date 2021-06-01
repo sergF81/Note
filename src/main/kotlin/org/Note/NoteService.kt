@@ -7,11 +7,11 @@ class NoteService : Crud<Note> {
         var notes: MutableList<Note> = arrayListOf()
     }
 
-    override fun add(note: Note): Note {
+    override fun add(note: Note): Int {
         val note = if (notes.isEmpty()) note.copy(noteId = 1)
         else note.copy(noteId = notes.last().noteId + 1)
         notes.plusAssign(note)
-        return notes.last()
+        return notes.last().noteId
     }
 
     override fun edit(noteNew: Note): Boolean {
@@ -26,7 +26,7 @@ class NoteService : Crud<Note> {
             }
 
         }
-        return false
+        throw  NoteNotFoundException()
     }
 
     override fun delete(IdDelete: Int): Boolean {
@@ -37,7 +37,7 @@ class NoteService : Crud<Note> {
                 return true
             }
         }
-        return false
+        throw  NoteNotFoundException()
     }
 
     override fun getList(ids: Int): List<Note> {
@@ -50,6 +50,9 @@ class NoteService : Crud<Note> {
         return outputNotes
     }
 
+
+
+
     override fun getById(idSearch: Int): Note? {
         for ((index, note) in notes.withIndex()) {
             if (notes[index].noteId === (idSearch)) {
@@ -61,7 +64,7 @@ class NoteService : Crud<Note> {
         throw  NoteNotFoundException()
     }
 
-    override fun restoreComment(idRestore: Int):Boolean {
+    override fun restoreComment(idRestore: Int): Boolean {
         TODO("Not yet implemented")
     }
 }

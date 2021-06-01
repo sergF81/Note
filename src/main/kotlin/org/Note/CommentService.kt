@@ -6,10 +6,8 @@ import org.Note.NoteService.Companion.notes
 class CommentService : Crud<Comment> {
     var comments: MutableList<Comment> = arrayListOf()
 
-    override fun add(comment: Comment): Comment {
+    override fun add(comment: Comment): Int {
         for ((index, note) in notes.withIndex()) {
-            //     println(comment.noteId)
-            //    println(notes[index].noteId)
             if ((notes[index].noteId == comment.noteId) && !notes[index].deleted) {
                 val comment = if (comments.isEmpty()) comment.copy(commentId = 1)
                 else comment.copy(commentId = comments.last().commentId + 1)
@@ -17,7 +15,7 @@ class CommentService : Crud<Comment> {
 
             }
         }
-        return comments.last()
+        return comments.last().commentId
     }
 
     override fun delete(idDelete: Int): Boolean {
@@ -65,7 +63,7 @@ class CommentService : Crud<Comment> {
         throw  CommentNotFoundException()
     }
 
-    override fun restoreComment(idRestore: Int):Boolean {
+    override fun restoreComment(idRestore: Int): Boolean {
         for ((index, comment) in comments.withIndex()) {
             if (notes[index].noteId == idRestore) {
                 comment.deleted = false
