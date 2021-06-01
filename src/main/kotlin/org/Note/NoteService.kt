@@ -3,7 +3,9 @@ package org.Note
 import org.w3c.dom.Entity
 
 class NoteService : Crud<Note> {
-   companion object {var notes: MutableList<Note> = arrayListOf()}
+    companion object {
+        var notes: MutableList<Note> = arrayListOf()
+    }
 
     override fun add(note: Note): Note {
         val note = if (notes.isEmpty()) note.copy(noteId = 1)
@@ -38,22 +40,20 @@ class NoteService : Crud<Note> {
         return false
     }
 
-    override fun getNotes(Ids: List<Int>): List<Note> {
+    override fun getList(ids: Int): List<Note> {
         var outputNotes: List<Note> = arrayListOf()
-        for ((index1, note) in notes.withIndex()) {
-            for ((index, element) in Ids.withIndex()) {
-                if (Ids[index] == notes[index1].noteId) {
-                    if (notes[index1].deleted == false) outputNotes += notes[index1]
-                } else continue
-            }
+        for ((index, note) in notes.withIndex()) {
+            if (ids == notes[index].ownerId) {
+                if (!notes[index].deleted) outputNotes += notes[index]
+            } else continue
         }
         return outputNotes
     }
 
-    override fun getById(IdSearch: Int): Note? {
+    override fun getById(idSearch: Int): Note? {
         for ((index, note) in notes.withIndex()) {
-            if (notes[index].noteId === (IdSearch)) {
-                if (notes[index].deleted == false)
+            if (notes[index].noteId === (idSearch)) {
+                if (!notes[index].deleted)
                     return note
                 break
             }
@@ -61,7 +61,7 @@ class NoteService : Crud<Note> {
         throw  NoteNotFoundException()
     }
 
-    override fun restoreComment() {
+    override fun restoreComment(idRestore: Int):Boolean {
         TODO("Not yet implemented")
     }
 }
